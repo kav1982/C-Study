@@ -10,21 +10,21 @@ public class Spawner : MonoBehaviour
     [Header("Set in Inspector: Spawing")]
     public GameObject boidPrefab;
     public Transform boidAnchor;
-    public int numBoids = 100;
-    public float spawnRadius = 100f;
-    public float spawnDelay = 0.1f;
+    public int numBoids = 100;              //鸟群数量
+    public float spawnRadius = 100f;        //刷新半径
+    public float spawnDelay = 0.1f;         //刷新延迟
 
     //调整全体Boids的行为
     [Header("Set in Inspector : Boids")]
-    public float velocity = 30f;
-    public float neighborDist = 30f;
-    public float collDist = 4f;
-    public float velMatching = 0.25f;
-    public float flockCentering = 0.2f;
-    public float collAvoid = 2f;
-    public float attractPull = 2f;
-    public float attractPush = 2f;
-    public float attractPushDist = 5f;
+    public float velocity = 30f;            //速度
+    public float neighborDist = 30f;        //相邻距离
+    public float collDist = 4f;             //外径
+    public float velMatching = 0.25f;       //容差
+    public float flockCentering = 0.2f;     //群集中心
+    public float collAvoid = 2f;            //内径
+    public float attractPull = 2f;          //吸引力拉
+    public float attractPush = 2f;          //吸引力推
+    public float attractPushDist = 5f;      //推力外径
 
     void Awake()
     {
