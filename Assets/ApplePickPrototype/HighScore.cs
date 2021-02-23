@@ -10,6 +10,7 @@ public class HighScore : MonoBehaviour
     void Awake()
     {
         //PlayerPrefs,字典,通过关键字HighScore引用值
+        //如果存在Keyworld"HighScore"返回true
         if (PlayerPrefs.HasKey("HighScore"))
         {
             score = PlayerPrefs.GetInt("HighScore");

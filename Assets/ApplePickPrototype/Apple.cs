@@ -10,6 +10,7 @@ public class Apple : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //当苹果下落到-20f的最低点时,删除对象
         if (transform.position.y < bottomY)
         {
             Destroy(this.gameObject);

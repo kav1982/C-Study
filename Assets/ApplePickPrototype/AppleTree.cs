@@ -20,7 +20,7 @@ public class AppleTree : MonoBehaviour
     {
         GameObject apple = Instantiate<GameObject>(applePrefab);
         apple.transform.position = transform.position;
-        Invoke("DropApple", secondsBetweenAppleDrops);//Invoke调用自身
+        Invoke("DropApple", secondsBetweenAppleDrops);//Invoke以秒为单位反复调用DropApple
     }
 
     // Update is called once per frame

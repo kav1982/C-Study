@@ -7,7 +7,7 @@ public class Basket : MonoBehaviour
 {
     [Header("Set Dynamically")]
     public Text scoreGT;
-    [System.Obsolete]
+    //[System.Obsolete]
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +40,7 @@ public class Basket : MonoBehaviour
         int score = int.Parse(scoreGT.text);
         score += 100;
         scoreGT.text = score.ToString();
-        //监视最高得分
+        //如果新得分高于最高得分.替换当前最高得分
         if (score > HighScore.score)
         {
             HighScore.score = score;
