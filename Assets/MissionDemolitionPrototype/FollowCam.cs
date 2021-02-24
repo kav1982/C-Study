@@ -27,7 +27,10 @@ public class FollowCam : MonoBehaviour
         destination = Vector3.Lerp(transform.position, destination, easing);
         destination.z = camZ;
         transform.position = destination;
+        
         //Camera.camera.orthographicSize = destination.y + 10;
+        //GameObject camera = GetComponent<Camera>();
+        //Camera.main.GetComponent<Camera>();
     }
 
 }
