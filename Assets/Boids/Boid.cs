@@ -14,9 +14,9 @@ public class Boid : MonoBehaviour
         neighborhood = GetComponent<Neighborhood>();
         //缓存刚体组件的引用,优化性能
         rigid = GetComponent<Rigidbody>();
-        //设置一个初始位置
+        //设置一个初始位置,insideUnitSphere: Returns a random point inside a sphere with radius 1 (Read Only).
         pos = Random.insideUnitSphere * Spawner.S.spawnRadius;
-        //设置一个初始速度
+        //设置一个初始速度 onUnitySphere: Returns a random point on the surface of a sphere with radius 1 (Read Only).
         Vector3 vel = Random.onUnitSphere * Spawner.S.velocity;
         rigid.velocity = vel;
         //设置方向
@@ -39,7 +39,7 @@ public class Boid : MonoBehaviour
 
     void LookAhead()
     {
-        //让Boid朝向飞行的方向
+        //让Boid朝向飞行的方向,velocity刚体的速度矢量. pos+rigid.velocity 飞行方向
         transform.LookAt(pos + rigid.velocity);
     }
 
@@ -52,6 +52,7 @@ public class Boid : MonoBehaviour
     //FixedUpdate 每次物理更新时调用
     void FixedUpdate()
     {
+        //velocity : The velocity vector of the rigidbody.
         Vector3 vel = rigid.velocity;
         Spawner spn = Spawner.S;
 
@@ -66,16 +67,18 @@ public class Boid : MonoBehaviour
             velAvoid *= spn.velocity;     
         }
 
-        //速度匹配-与周围邻居的速度保持一致
+        //速度匹配,与平均速度保持一致
         Vector3 velAlign = neighborhood.avgVel;
         //只在veiAlign不为0时起效
         if(velAlign != Vector3.zero)
         {
+            //因为在意方向,所以归一化速度
             velAlign.Normalize();
+            //设置我们想要的速度
             velAlign *= spn.velocity;
         }
 
-        //中心聚集
+        //中心聚集,朝本地邻居的中心移动
         Vector3 velCenter = neighborhood.avgPos;
         if(velCenter != Vector3.zero)
         {
@@ -84,7 +87,7 @@ public class Boid : MonoBehaviour
             velCenter *= spn.velocity;
         }
 
-        //朝向Attractor移动
+        //吸引-朝向Attractor移动
         Vector3 delta = Attractor.POS - pos;
         //检查是朝向还是背向Attractor移动
         bool attracted = (delta.magnitude > spn.attractPushDist);

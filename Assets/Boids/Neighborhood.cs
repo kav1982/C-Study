@@ -5,21 +5,23 @@ using UnityEngine;
 public class Neighborhood : MonoBehaviour
 {
     [Header("Set Dynamically")]
+    //neighbors相邻的
     public List<Boid> neighbors;
     private SphereCollider coll;
 
     // Start is called before the first frame update
     void Start()
     {
-        //初始化neighbors列表
+        //初始化neighbors的Boid列表
         neighbors = new List<Boid>();
         //引用这个对象的球体碰撞
         coll = GetComponent<SphereCollider>();
-        //设定球体碰撞的半径为Spawner单例的neighborDist的一半
+        //设定球体碰撞的半径为Spawner单例的相邻距离的一半
+        //neighborDist 相邻距离
         coll.radius = Spawner.S.neighborDist / 2;
     }
 
-    //检查neighborDist是否变化,如果是它会改变球体碰撞的半径
+    //检查neighborDist是否变化,如果是,就改变球体碰撞的半径(重新赋值)
     //球体碰撞的半径会导致大量PhysX运算,慎用
     void FixedUpdate()
     {
@@ -29,8 +31,8 @@ public class Neighborhood : MonoBehaviour
         }
     }
 
-    
-    //当其它物体进入触发器
+
+    //当其它物体进入触发器,如果Boid不在neighbors列表里就添加
     void OnTriggerEnter(Collider other)
     {
         Boid b = other.GetComponent<Boid>();
@@ -42,7 +44,7 @@ public class Neighborhood : MonoBehaviour
             }
         }
     }
-    //当另一个Boid不再接触Biod触发器
+    //当另一个Boid不再接触Biod触发器,移除
     void OnTriggerExit(Collider other)
     {
         Boid b = other.GetComponent<Boid>();

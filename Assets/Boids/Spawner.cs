@@ -22,8 +22,8 @@ public class Spawner : MonoBehaviour
     public float velMatching = 0.25f;       //容差
     public float flockCentering = 0.2f;     //群集中心
     public float collAvoid = 2f;            //内径
-    public float attractPull = 2f;          //吸引力拉
-    public float attractPush = 2f;          //吸引力推
+    public float attractPull = 2f;          //拉力
+    public float attractPush = 2f;          //推力
     public float attractPushDist = 5f;      //推力外径
 
     void Awake()
@@ -37,6 +37,7 @@ public class Spawner : MonoBehaviour
 
     public void InstantiateBoid()
     {
+        //Instantiate : Clones the object original and returns the clone.
         GameObject go = Instantiate(boidPrefab);
         Boid b = go.GetComponent<Boid>();
         b.transform.SetParent(boidAnchor);
