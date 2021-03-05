@@ -13,16 +13,6 @@ public class Attractor : MonoBehaviour
     public float yPhase = 0.4f;
     public float zPhase = 1.0f;
 
-    //void Start()
-    //{
-
-    //}
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-
-    //}
 
     void FixedUpdate()
     {
