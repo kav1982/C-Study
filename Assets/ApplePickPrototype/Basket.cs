@@ -44,8 +44,11 @@ public class Basket : MonoBehaviour
             Destroy(collidedWith);
         }
         //显示计分板
+        //将scoreGT转换为整数值 
         int score = int.Parse(scoreGT.text);
+        //每次接住苹果+100分
         score += 100;
+        //转换为字符串显示在屏幕上
         scoreGT.text = score.ToString();
         //如果新得分高于最高得分.替换当前最高得分
         if (score > HighScore.score)

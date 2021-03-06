@@ -9,8 +9,9 @@ public class HighScore : MonoBehaviour
 
     void Awake()
     {
-        //PlayerPrefs,字典,通过关键字HighScore引用值
-        //如果存在Keyworld"HighScore"返回true
+        // PlayerPrefs,字典,通过关键字HighScore引用值key
+        // 如果存在Keyworld"HighScore"返回true
+        // Returns true if key exists in the preferences.
         if (PlayerPrefs.HasKey("HighScore"))
         {
             score = PlayerPrefs.GetInt("HighScore");
@@ -22,6 +23,7 @@ public class HighScore : MonoBehaviour
     void Update()
     {
         Text gt = this.GetComponent<Text>();
+        //使用+连接会隐式调用ToString方法转换类型
         gt.text = "High Score:" + score;
     }
 }
