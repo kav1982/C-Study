@@ -1,18 +1,52 @@
-﻿using System.Collections;               //用于数组和其它合集
-using System.Collections.Generic;       //用于列表和字典
-using UnityEngine;                      //用于unity程序
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Set in Inspector: Enemy")]
+    public float speed = 10f;       //运动速度,米/秒
+    public float fireRate = 0.3f;   //发射频率
+    public float health = 10;
+    public int score = 100;         //击毁敌机得到的分数
+    private BoundsCheck bndCheck;   //是否飞出屏幕
+
+    void Awake()
     {
-        
+        bndCheck = GetComponent<BoundsCheck>();
     }
 
-    // Update is called once per frame
+    //pos属性,保护字段
+    public Vector3 pos
+    {
+        get
+        {
+            return (this.transform.position);
+        }
+        set
+        {
+            this.transform.position = value;
+        }
+    }
+
     void Update()
     {
-        
+        Move();
+        //if (bndCheck != null && !bndCheck.isOnScreen)
+        //检查以确保对象从屏幕底部消失
+        if (bndCheck != null && bndCheck.offDown)
+        {
+            //if (pos.y<bndCheck.camHeight - bndCheck.radius)
+            
+                Destroy(gameObject);
+            
+        }
+    }
+
+    public virtual void Move()
+    {
+        Vector3 tempPos = pos;
+        tempPos.y -= speed * Time.deltaTime;
+        pos = tempPos;
     }
 }
