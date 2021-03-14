@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8313536169109322405}
   - component: {fileID: 8313536169109322404}
   - component: {fileID: 8313536169109322459}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,9 +103,9 @@ GameObject:
   - component: {fileID: 5407157432101249872}
   - component: {fileID: 114765425828185718}
   - component: {fileID: 9031369652048243272}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy_0
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 8313536169713327877}
   - component: {fileID: 8313536169713327876}
   - component: {fileID: 8313536169713327931}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Coclpit
   m_TagString: Untagged
   m_Icon: {fileID: 0}

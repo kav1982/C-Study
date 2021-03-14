@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4335358536929713137}
   - component: {fileID: 4778368339821946132}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy_2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 4335358536959983454}
   - component: {fileID: 4335358536959983449}
   - component: {fileID: 4335358536959983448}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 4335358537117522204}
   - component: {fileID: 4335358537117522207}
   - component: {fileID: 4335358537117522206}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 4335358538394408327}
   - component: {fileID: 4335358538394408326}
   - component: {fileID: 4335358538394408321}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Coclpit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
