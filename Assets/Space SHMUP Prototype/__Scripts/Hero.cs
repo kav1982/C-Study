@@ -16,8 +16,8 @@ public class Hero : MonoBehaviour
     public float gameRestartDelay = 2f;
 
     [Header("Set Dynamically")]
-    public float shieldLevel = 1;
-    //private float _shieldLevel = 1;//全局变量改为属性伪装成字段
+    //public float shieldLevel = 1;
+    private float _shieldLevel = 4;//全局变量改为属性伪装成字段
     public GameObject lastTriggerGo = null;
 
     void Awake()
@@ -70,24 +70,24 @@ public class Hero : MonoBehaviour
         {
             print("Triggered: " + go.name);
         }
-    }   
+    }
 
-    //public float shieldLevel
-    //{
-    //    get
-    //    {
-    //        return (_shieldLevel);
-    //    }
-    //    set
-    //    {
-    //        //确保shieldLevel的值永远不大于4
-    //        shieldLevel = Mathf.Min(value, 4);
-    //        //如果传入的护盾值小于0,销毁_Hero
-    //        if(value < 0)
-    //        {
-    //            Destroy(this.gameObject);
-    //            Main.S.DelayedRestart(gameRestartDelay);
-    //        }
-    //    }
-    //}
+    public float shieldLevel
+    {
+        get
+        {
+            return (_shieldLevel);
+        }
+        set
+        {
+            //确保shieldLevel的值永远不大于4
+            _shieldLevel = Mathf.Min(value, 4);
+            //如果传入的护盾值小于0,销毁_Hero
+            if (value < 0)
+            {
+                Destroy(this.gameObject);
+                Main.S.DelayedRestart(gameRestartDelay);
+            }
+        }
+    }
 }

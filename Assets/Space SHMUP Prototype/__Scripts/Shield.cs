@@ -31,7 +31,7 @@ public class Shield : MonoBehaviour
         }
 
         float rz = -(rotationsPerSecond * Time.time * 360) % 360f;
-        //使盾牌环绕Z轴向旋转
+        //使盾牌环绕Z轴,每秒旋转一定的角度
         transform.rotation = Quaternion.Euler(0, 0, rz);
     }
 
