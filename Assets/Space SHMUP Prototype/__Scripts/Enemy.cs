@@ -49,4 +49,23 @@ public class Enemy : MonoBehaviour
         tempPos.y -= speed * Time.deltaTime;
         pos = tempPos;
     }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        //获取被击中的Collider实例
+        GameObject otherGO = coll.gameObject;
+        //如果tag是ProjectileHero,销毁敌机实例
+        if (otherGO.tag == "ProjectileHero") 
+        {
+            //消除子弹
+            Destroy(otherGO);
+            //消除敌人
+            Destroy(gameObject);
+        }
+        else
+        {
+            //将标签不是ProjectileHero的物体打印到控制台
+            print("Enemy hit by non-ProjectileHero:" + otherGO.name);
+        }
+    }
 }
