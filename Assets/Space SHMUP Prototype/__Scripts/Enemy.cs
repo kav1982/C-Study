@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     public float fireRate = 0.3f;   //发射频率
     public float health = 10;
     public int score = 100;         //击毁敌机得到的分数
-    private BoundsCheck bndCheck;   //是否飞出屏幕
+    protected BoundsCheck bndCheck;   //是否飞出屏幕
 
     void Awake()
     {
