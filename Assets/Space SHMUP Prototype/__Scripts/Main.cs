@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;      //用于加载和重载场景
 public class Main : MonoBehaviour
 {
     static public Main S;
+    static Dictionary<WeaponType, WeaponDefinition> WEAP_DICT;
 
     [Header("Set in Inspector")]
     public GameObject[] prefabEnemies;          //Enemy预设数组
     public float enemySpawnPerSecond = 0.5f;    //每秒产生的敌机数量
     public float enemySpawnPadding = 1.5f;      //位置填充
-
+    public WeaponDefinition[] WeaponDefinitions;
     private BoundsCheck bndCheck;
 
     void Awake()
@@ -20,7 +21,14 @@ public class Main : MonoBehaviour
         //将bndCheck设置为当前游戏对象BoundsCheck组件的引用
         bndCheck = GetComponent<BoundsCheck>();
         // 1/0.5=2秒, 调用一次SpewnEnemy()
-        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond); ;
+        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);
+        //WeaponType作为Key
+        WEAP_DICT = new Dictionary<WeaponType, WeaponDefinition>();
+        //循环遍历WeaponDefinitions数组的每一个元素,创建和它匹配的WEAP_DICT字典入口
+        foreach(WeaponDefinition def in WeaponDefinitions)
+        {
+            WEAP_DICT[def.type] = def;
+        }
     }
 
     public void SpawnEnemy()
@@ -59,5 +67,15 @@ public class Main : MonoBehaviour
     {
         SceneManager.LoadScene("_Scene_0");
     }
+
+    static public WeaponDefinition GetWeaponDefinition(WeaponType wt)
+    {
+        if (WEAP_DICT.ContainsKey(wt))
+        {
+            return (WEAP_DICT)[wt];
+        }
+       //返回新的WeaponDefinition,表示未能找到正确的返回新的WeaponDefinition
+        return (new WeaponDefinition());
+    }   
 
 }
