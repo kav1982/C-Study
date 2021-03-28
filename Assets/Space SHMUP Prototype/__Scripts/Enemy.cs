@@ -5,11 +5,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("Set in Inspector: Enemy")]
-    public float speed = 10f;       //运动速度,米/秒
-    public float fireRate = 0.3f;   //发射频率
-    public float health = 10;
-    public int score = 100;         //击毁敌机得到的分数
-    protected BoundsCheck bndCheck;   //是否飞出屏幕
+    public float speed = 10f;           //运动速度,米/秒
+    public float fireRate = 0.3f;       //发射频率
+    public float health = 10;           //血量
+    public int score = 100;             //击毁敌机得到的分数
+    protected BoundsCheck bndCheck;     //是否飞出屏幕
 
     void Awake()
     {
@@ -50,22 +50,52 @@ public class Enemy : MonoBehaviour
         pos = tempPos;
     }
 
+    //void OnCollisionEnter(Collision coll)
+    //{
+    //    //获取被击中的Collider实例
+    //    GameObject otherGO = coll.gameObject;
+    //    //如果tag是ProjectileHero,销毁敌机实例
+    //    if (otherGO.tag == "ProjectileHero") 
+    //    {
+    //        //消除子弹
+    //        Destroy(otherGO);
+    //        //消除敌人
+    //        Destroy(gameObject);
+    //    }
+    //    else
+    //    {
+    //        //将标签不是ProjectileHero的物体打印到控制台
+    //        print("Enemy hit by non-ProjectileHero:" + otherGO.name);
+    //    }
+    //}
+
     void OnCollisionEnter(Collision coll)
-    {
-        //获取被击中的Collider实例
-        GameObject otherGO = coll.gameObject;
-        //如果tag是ProjectileHero,销毁敌机实例
-        if (otherGO.tag == "ProjectileHero") 
+    {       
+        GameObject other = coll.gameObject;
+        switch(other.tag)
         {
-            //消除子弹
-            Destroy(otherGO);
-            //消除敌人
-            Destroy(gameObject);
-        }
-        else
-        {
-            //将标签不是ProjectileHero的物体打印到控制台
-            print("Enemy hit by non-ProjectileHero:" + otherGO.name);
+            case "ProjectileHero":
+                Projectile p = other.GetComponent<Projectile>();
+                //进入屏幕前敌机不会被被伤害
+                if(!bndCheck.isOnScreen)
+                {
+                    Destroy(other);
+                    break;
+                }
+                //扣血
+                health -= Main.GetWeaponDefinition(p.type).damageOnHit;
+
+                if(health <= 0)
+                {
+                    Destroy(this.gameObject);
+                }
+                Destroy(other);
+                break;
+
+            default:
+                print("Enemy hit by non-ProjectileHero:" + other.name);
+                break;
+                
         }
     }
 }

@@ -9,11 +9,11 @@ public class Main : MonoBehaviour
     static Dictionary<WeaponType, WeaponDefinition> WEAP_DICT;
 
     [Header("Set in Inspector")]
-    public GameObject[] prefabEnemies;          //Enemy预设数组
-    public float enemySpawnPerSecond = 0.5f;    //每秒产生的敌机数量
-    public float enemySpawnPadding = 1.5f;      //位置填充
-    public WeaponDefinition[] WeaponDefinitions;
-    private BoundsCheck bndCheck;
+    public GameObject[] prefabEnemies;              //Enemy预设数组
+    public float enemySpawnPerSecond = 0.5f;        //每秒产生的敌机数量
+    public float enemySpawnPadding = 1.5f;          //位置填充
+    public WeaponDefinition[] WeaponDefinitions;    //武器的定义
+    private BoundsCheck bndCheck;                   //边界检查
 
     void Awake()
     {
@@ -70,6 +70,7 @@ public class Main : MonoBehaviour
 
     static public WeaponDefinition GetWeaponDefinition(WeaponType wt)
     {
+        //确认Dictionary中有关键字
         if (WEAP_DICT.ContainsKey(wt))
         {
             return (WEAP_DICT)[wt];
