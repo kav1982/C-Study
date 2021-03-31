@@ -5,15 +5,34 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("Set in Inspector: Enemy")]
-    public float speed = 10f;           //运动速度,米/秒
-    public float fireRate = 0.3f;       //发射频率
-    public float health = 10;           //血量
-    public int score = 100;             //击毁敌机得到的分数
-    protected BoundsCheck bndCheck;     //是否飞出屏幕
+    public float speed = 10f;                           //运动速度,米/秒
+    public float fireRate = 0.3f;                       //发射频率
+    public float health = 10;                           //血量
+    public int score = 100;                             //击毁敌机得到的分数
+
+    public float showDamageDuration = 0.1f;             //显示销毁持续时间
+
+    [Header("Set Dynamically:Enemy")]
+
+    public Color[] originalColors;
+    public Material[] materials;                        //本对象以及子对象的所有材质
+
+    public bool showingDamage = false;                  //显示伤害
+    public float damageDoneTime;                        //停止显示销毁时间
+    public bool notifiedOfDestruction = false;
+
+    protected BoundsCheck bndCheck;                     //是否飞出屏幕
 
     void Awake()
     {
-        bndCheck = GetComponent<BoundsCheck>();
+        bndCheck = GetComponent<BoundsCheck>();         //获取当前游戏对象和子对象的颜色以及材质
+        materials = Utils.GetAllMaterials(gameObject);
+        originalColors = new Color[materials.Length];
+
+        for (int i = 0; i < materials.Length; i++)
+        {
+            originalColors[i] = materials[i].color;
+        }
     }
 
     //pos属性,保护字段
@@ -40,6 +59,16 @@ public class Enemy : MonoBehaviour
             
                 Destroy(gameObject);
             
+        }
+
+        if(showingDamage && Time.time > damageDoneTime)
+        {
+            UnshowDamage();
+        }
+
+        if(bndCheck != null && bndCheck.offDown)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -84,6 +113,7 @@ public class Enemy : MonoBehaviour
                 }
                 //扣血
                 health -= Main.GetWeaponDefinition(p.type).damageOnHit;
+                ShowDamage();
 
                 if(health <= 0)
                 {
@@ -97,5 +127,26 @@ public class Enemy : MonoBehaviour
                 break;
                 
         }
+    }
+
+    void ShowDamage()
+    {
+        foreach (Material m in materials)
+        {
+            m.color = Color.red;
+        }
+
+        showingDamage = true;
+        damageDoneTime = Time.time + showDamageDuration;
+    }
+
+    void UnshowDamage()
+    {
+        for (int i=0; i<materials.Length; i++)
+        {
+            materials[i].color = originalColors[i];
+        }
+        showingDamage = false;
+
     }
 }
