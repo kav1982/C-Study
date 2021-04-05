@@ -13,7 +13,36 @@ public class Main : MonoBehaviour
     public float enemySpawnPerSecond = 0.5f;        //每秒产生的敌机数量
     public float enemySpawnPadding = 1.5f;          //位置填充
     public WeaponDefinition[] WeaponDefinitions;    //武器的定义
+
+    public GameObject prefabPowerUp;                //管理所有设备升级的预设
+
+    //通过数组中的的数量决定创建升级道具的频率
+    public WeaponType[] powerUpFrequency = new WeaponType[]
+    {
+        WeaponType.blaster, WeaponType.blaster,
+        WeaponType.spread,WeaponType.shield
+    };
+                        
     private BoundsCheck bndCheck;                   //边界检查
+
+    public void ShipDestroyed(Enemy e)
+    {
+        //掉落升级道具的概率
+        if(Random.value <= e.powerUpDropChance)
+        {
+            int ndx = Random.Range(0, powerUpFrequency.Length);
+            WeaponType puType = powerUpFrequency[ndx];
+
+            //生成升级道具
+            GameObject go = Instantiate(prefabPowerUp) as GameObject;
+            PowerUp pu = go.GetComponent<PowerUp>();
+            //将其设置为正确的武器类型
+            pu.SetType(puType);
+
+            //将其摆放在敌机被消灭时的位置
+            pu.transform.position = e.transform.position;
+        }
+    }
 
     void Awake()
     {

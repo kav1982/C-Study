@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public int score = 100;                             //击毁敌机得到的分数
 
     public float showDamageDuration = 0.1f;             //显示销毁持续时间
+    public float powerUpDropChance = 1f;                //升级道具掉落的概率
 
     [Header("Set Dynamically:Enemy")]
 
@@ -117,6 +118,13 @@ public class Enemy : MonoBehaviour
 
                 if(health <= 0)
                 {
+                    //通知Main单例,对象敌机已被消灭
+                    if(!notifiedOfDestruction)
+                    {
+                        Main.S.ShipDestroyed(this);
+                    }
+                    notifiedOfDestruction = true;
+                    //消灭敌机
                     Destroy(this.gameObject);
                 }
                 Destroy(other);

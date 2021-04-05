@@ -16,6 +16,7 @@ public class Hero : MonoBehaviour
     public float gameRestartDelay = 2f;
     public GameObject projectilePrefab;
     public float projectileSpeed = 40;
+    public Weapon[] weapons;
 
     [Header("Set Dynamically")]
     //public float shieldLevel = 1;
@@ -25,7 +26,7 @@ public class Hero : MonoBehaviour
     public delegate void WeaponFireDelegate();
     public WeaponFireDelegate fireDelegate;
 
-    void Awake()
+    void Start()
     {
         if (S == null)
         {
@@ -36,6 +37,9 @@ public class Hero : MonoBehaviour
             Debug.LogError("Hero.Awake()-Attempted to assign second Hero.S!");
         }
         //fireDelegate += TempFire;
+        //重置武器,从第一个高爆武器开始
+        ClearWeapons();
+        weapons[0].SetType(WeaponType.blaster);
     }
 
     void Update()
@@ -96,10 +100,47 @@ public class Hero : MonoBehaviour
             shieldLevel--;
             Destroy(go);
         }
+        else if(go.tag == "PowerUp")
+        {
+            AbsorbPowerUp(go);
+        }
         else
         {
-            print("Triggered: " + go.name);
+            print("触发碰撞事件: " + go.name);
         }
+    }
+
+    public void AbsorbPowerUp(GameObject go)
+    {
+        PowerUp pu= go.GetComponent<PowerUp>();
+        switch (pu.type)
+        {
+            //如果升级道具具有护盾类型,它可以为护盾增加一个等级
+            case WeaponType.shield:
+                shieldLevel++;
+                break;
+            //其它升级道具的类型都是武器,所以这是默认状态
+            default:
+                //如果是任何一种武器升级道具
+                if(pu.type == weapons[0].type)
+                {
+                    Weapon w = GetEmptyWeaponSlot();
+                    if(w != null)
+                    {
+                        //将其赋值给pu.type
+                        w.SetType(pu.type);
+                    }
+                }
+                else//如果武器类型不一致
+                {
+                    //清空所有武器槽
+                    ClearWeapons();
+                    //将新获得的武器设置为Weapon_0武器类型
+                    weapons[0].SetType(pu.type);
+                }
+                break;
+        }
+        pu.AbsorbedBy(this.gameObject);
     }
 
     public float shieldLevel
@@ -118,6 +159,26 @@ public class Hero : MonoBehaviour
                 Destroy(this.gameObject);
                 Main.S.DelayedRestart(gameRestartDelay);
             }
+        }
+    }
+
+     Weapon GetEmptyWeaponSlot()
+    {
+        for (int i=0; i<weapons.Length; i++)
+        {
+            if(weapons[i].type == WeaponType.none)
+            {
+                return (weapons[i]);
+            }
+        }
+        return (null);
+    }
+
+    void ClearWeapons()
+    {
+        foreach(Weapon w in weapons)
+        {
+            w.SetType(WeaponType.none);
         }
     }
 }
