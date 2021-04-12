@@ -121,7 +121,8 @@ public class Enemy_4 : Enemy
     }
 
     //重写Enemy.OnCollisionEnter
-    void OnCollisionEnder(Collision coll)
+    //public override void OnCollisionEnter(Collision coll)
+    void OnCollisionEnter(Collision coll)
     {
         GameObject other = coll.gameObject;
         switch (other.tag)
